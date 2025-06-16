@@ -1,0 +1,24 @@
+import React from "react";
+import NotesCard from "../common/notes-card";
+import Link from "next/link";
+
+const RecentNotesSection = () => {
+  return (
+    <section className="flex flex-col gap-4 mt-8">
+      <h2 className="text-2xl font-[700] text-center">
+        Recently Generate Notes
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+      </div>
+      {/* TODO: replace 1 with actual notes id */}
+      <Link href={`/notes/all`} className="w-max mx-auto lg:ml-auto text-primary font-semibold underline">
+        See all notes here
+      </Link>{" "}
+    </section>
+  );
+};
+
+export default RecentNotesSection;
