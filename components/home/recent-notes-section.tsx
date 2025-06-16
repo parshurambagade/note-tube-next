@@ -9,12 +9,16 @@ const RecentNotesSection = () => {
         Recently Generate Notes
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
+        {/* TODO: Fetch latest notes and map the notes cards  */}
         <NotesCard />
         <NotesCard />
         <NotesCard />
       </div>
       {/* TODO: replace 1 with actual notes id */}
-      <Link href={`/notes/all`} className="w-max mx-auto lg:ml-auto text-primary font-semibold underline">
+      <Link
+        href={`/notes/all`}
+        className="w-max mx-auto lg:ml-auto text-primary font-semibold underline"
+      >
         See all notes here
       </Link>{" "}
     </section>
