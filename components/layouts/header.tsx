@@ -13,8 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -66,7 +64,7 @@ export default function MainHeader() {
           {/* TODO: Add login button and conditionally render avatar and login button. */}
           <div className="hidden md:flex">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex gap-2 items-center my-2 min-w-max">
+              <DropdownMenuTrigger className="flex gap-2 items-center my-3 min-w-max">
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
