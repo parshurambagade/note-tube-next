@@ -3,18 +3,15 @@
 import { useState } from "react";
 import Notes from "@/components/notes/index";
 import { Separator } from "@/components/ui/separator";
+import { useParams } from "next/navigation";
+import { useVideoData } from "@/hooks/useVideoData";
 
 const Generate = () => {
   const [isSaved, setIsSaved] = useState(false);
+  const { videoId } = useParams();
+  const { videoData, loading, error, refetch } = useVideoData(videoId);
 
   // Mock data - in real app, this would come from props or API
-  const videoData = {
-    title: "Introduction to Machine Learning - Complete Beginner's Guide",
-    videoId: "ukzFI9rgwfU", // Sample YouTube video ID
-    duration: "45:32",
-    channel: "Tech Education Hub",
-  };
-
   const notes = {
     summary:
       "This comprehensive introduction to machine learning covers fundamental concepts, algorithms, and practical applications for beginners.",
@@ -69,6 +66,24 @@ const Generate = () => {
     // In real app, implement save functionality
     setTimeout(() => setIsSaved(false), 2000);
   };
+
+  if (loading) {
+    return <div>Loading video details...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button onClick={refetch}>Retry</button>
+      </div>
+    );
+  }
+
+  if (!videoData) {
+    return <div>No video data available</div>;
+  }
+
   return (
     <Notes>
       <Notes.Head>

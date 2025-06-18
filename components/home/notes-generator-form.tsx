@@ -10,7 +10,9 @@ interface NotesGeneratorFormProp {
 const NotesGeneratorForm: React.FC<NotesGeneratorFormProp> = ({
   onNavigate,
 }) => {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(
+    "https://youtu.be/dRXq81Om2a4?si=40mhJXnYtcLoRNk1"
+  );
   const { error, isValidVideoId, handleSubmit } = useNotesGenerator({
     url,
     onNavigate,

@@ -18,6 +18,10 @@ const NotesVideoHead: React.FC<NotesVideoHeadProps> = ({
   isSaved,
   videoData,
 }) => {
+  if (!videoData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="bg-white border-b border-gray-200 p-4">
       <div className="flex flex-col md:flex-row  gap-3 items-start md:items-center justify-between">
