@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
-import { VideoService, type VideoData } from "@/services/videoService";
-
-interface UseVideoDataReturn {
-  videoData: VideoData | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => void;
-}
+import { VideoService } from "@/services/videoService";
+import type { UseVideoDataReturn, VideoData } from "@/types";
 
 export const useVideoData = (videoId: string | string[] | undefined): UseVideoDataReturn => {
   const [videoData, setVideoData] = useState<VideoData | null>(null);

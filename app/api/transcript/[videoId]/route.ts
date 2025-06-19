@@ -1,17 +1,12 @@
 import { NextResponse } from "next/server";
-import TranscriptClient from "youtube-transcript-api"
-
-interface TranscriptItem {
-  text: string;
-  start: number;
-  dur: number;
-}
+import TranscriptClient from "youtube-transcript-api";
+import type { TranscriptItem, TranscriptRouteParams } from "@/types";
 
 const client = new TranscriptClient();
 
 export async function GET(
   request: Request, 
-  { params }: { params: Promise<{ videoId: string }> }
+  { params }: TranscriptRouteParams
 ) {
   try {
     const { videoId } = await params;

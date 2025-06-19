@@ -1,18 +1,11 @@
-// route handler for video details 
 import { NextResponse } from 'next/server';
 import { GET_VIDEO_DETAILS } from '@/constants';
 import { YOUTUBE_API_KEY } from '@/constants';
-
-interface VideoDetails {
-  title: string;
-  videoId: string;
-  duration: string;
-  channel: string;
-}
+import type { VideoDetails, VideoRouteParams } from '@/types';
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ videoId: string }> }
+  { params }: VideoRouteParams
 ) {
   const { videoId } = await params;
 

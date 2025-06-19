@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { TranscriptService } from "@/services/transcriptService";
-
-interface UseVideoTranscriptReturn {
-  transcript: string;
-  loading: boolean;
-  error: string | null;
-}
+import type { UseVideoTranscriptReturn } from "@/types";
 
 export const useVideoTranscript = (videoId: string | string[] | undefined): UseVideoTranscriptReturn => {
   const [transcript, setTranscript] = useState("");

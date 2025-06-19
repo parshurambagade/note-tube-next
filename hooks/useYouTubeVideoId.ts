@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { parseYouTubeUrl, isValidYouTubeVideoId } from "../utils/youtube";
-
-interface UseYouTubeVideoIdReturn {
-  videoId: string;
-  error: boolean;
-  isValidVideoId: boolean;
-}
+import type { UseYouTubeVideoIdReturn } from "@/types";
 
 export const useYouTubeVideoId = (url: string): UseYouTubeVideoIdReturn => {
   const [videoId, setVideoId] = useState("");
@@ -19,7 +14,7 @@ export const useYouTubeVideoId = (url: string): UseYouTubeVideoIdReturn => {
     }
 
     const extractedVideoId = parseYouTubeUrl(url);
-    
+
     if (extractedVideoId && isValidYouTubeVideoId(extractedVideoId)) {
       setVideoId(extractedVideoId);
       setError(false);
@@ -34,6 +29,6 @@ export const useYouTubeVideoId = (url: string): UseYouTubeVideoIdReturn => {
   return {
     videoId,
     error,
-    isValidVideoId
+    isValidVideoId,
   };
 };

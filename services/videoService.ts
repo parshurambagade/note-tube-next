@@ -1,18 +1,5 @@
 import { formatYouTubeDuration } from "@/utils/time";
-
-export interface VideoData {
-  title: string;
-  videoId: string;
-  duration: string;
-  channel: string;
-}
-
-export interface VideoApiResponse {
-  title: string;
-  duration: string;
-  channel: string;
-  error?: string;
-}
+import type { VideoData, VideoApiResponse } from "@/types";
 
 export class VideoService {
   static async getVideoDetails(videoId: string): Promise<VideoData> {

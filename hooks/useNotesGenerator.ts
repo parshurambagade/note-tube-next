@@ -1,17 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useYouTubeVideoId } from "./useYouTubeVideoId";
-
-interface UseNotesGeneratorProps {
-  url: string;
-  onNavigate?: (videoId: string) => void;
-}
-
-interface UseNotesGeneratorReturn {
-  videoId: string;
-  error: boolean;
-  isValidVideoId: boolean;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
+import type { UseNotesGeneratorProps, UseNotesGeneratorReturn } from "@/types";
 
 export const useNotesGenerator = ({ 
   url, 

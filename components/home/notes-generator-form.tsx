@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNotesGenerator } from "@/hooks/useNotesGenerator";
+import type { NotesGeneratorFormProps } from "@/types";
 
-interface NotesGeneratorFormProp {
-  onNavigate?: (videoId: string) => void;
-}
 
-const NotesGeneratorForm: React.FC<NotesGeneratorFormProp> = ({
+const NotesGeneratorForm: React.FC<NotesGeneratorFormProps> = ({
   onNavigate,
 }) => {
   const [url, setUrl] = useState(

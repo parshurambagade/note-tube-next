@@ -1,17 +1,7 @@
 import { BookOpen, Clock, Save } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
-
-interface VideoData {
-  title: string;
-  duration: string;
-  channel: string;
-}
-interface NotesVideoHeadProps {
-  handleSave: () => void;
-  isSaved: boolean;
-  videoData: VideoData;
-}
+import type { NotesVideoHeadProps } from "@/types";
 
 const NotesVideoHead: React.FC<NotesVideoHeadProps> = ({
   handleSave,

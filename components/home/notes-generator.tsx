@@ -2,10 +2,7 @@
 
 import React from "react";
 import NotesGeneratorForm from "./notes-generator-form";
-
-interface NotesGeneratorProps {
-  onNavigate?: (videoId: string) => void;
-}
+import type { NotesGeneratorProps } from "@/types";
 
 const NotesGenerator: React.FC<NotesGeneratorProps> = ({ onNavigate }) => {
   return (
