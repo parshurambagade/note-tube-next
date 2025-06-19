@@ -1,5 +1,4 @@
 import React from "react";
-import { Badge } from "../ui/badge";
 
 interface Section {
   title: string;
@@ -22,9 +21,10 @@ const DetailedNotes: React.FC<DetailedNotesProps> = ({ sections }) => {
               <h4 className="text-lg font-semibold text-gray-900">
                 {section.title}
               </h4>
-              <Badge variant="outline" className="text-xs">
+              {/* TODO: Add timestamp badge in future updates */}
+              {/* <Badge variant="outline" className="text-xs">
                 {section.timestamp}
-              </Badge>
+              </Badge> */}
             </div>
             <p className="text-base text-gray-700 leading-relaxed mb-4">
               {section.content}

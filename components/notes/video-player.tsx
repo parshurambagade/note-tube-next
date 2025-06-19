@@ -1,3 +1,4 @@
+import { YOUTUBE_EMBED_URL } from "@/constants";
 import React from "react";
 
 interface VideoPlayerProps {
@@ -9,7 +10,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, title }) => {
   return (
     <div className="relative aspect-video">
       <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
+        src={`${YOUTUBE_EMBED_URL}/${videoId}`}
         title={title}
         className="w-full h-full"
         allowFullScreen
