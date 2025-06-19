@@ -60,7 +60,6 @@ const Generate = () => {
       },
     ],
   };
-
   const handleSave = () => {
     setIsSaved(true);
     // In real app, implement save functionality

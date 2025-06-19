@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 
-const NotesContent = ({ children }: React.PropsWithChildren<{}>) => {
+const NotesContent = ({ children }: React.PropsWithChildren) => {
   return (
     <div className="border rounded-b-xl p-4 md:p-6 py-0 ">
       <div className="flex items-center justify-between mb-6">
