@@ -10,7 +10,6 @@ export async function GET(
 ) {
   try {
     const { videoId } = await params;
-    console.log('Received videoId:', videoId);
     // Validate videoId
     if (!videoId || videoId.trim() === '') {
       return NextResponse.json(

@@ -1,5 +1,8 @@
 // Hook-related type definitions
 
+import { NotesData } from "./components";
+import { VideoData } from "./video";
+
 export interface UseYouTubeVideoIdReturn {
   videoId: string;
   error: boolean;
@@ -19,17 +22,21 @@ export interface UseVideoTranscriptReturn {
   error: string | null;
 }
 
-export interface UseNotesGeneratorProps {
+export interface UseNotesGeneratorFormProps {
   url: string;
   onNavigate?: (videoId: string) => void;
 }
 
-export interface UseNotesGeneratorReturn {
+export interface UseNotesGeneratorFormReturn {
   videoId: string;
   error: boolean;
   isValidVideoId: boolean;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
-
-// Import video types
-import type { VideoData } from './video';
+export interface UseNotesGeneratorProps {
+  notes: NotesData | null;
+  loading: boolean;
+  error: string | null;
+  generateNotes: (videoId: string) => Promise<void>;
+  refetch: () => Promise<void>;
+}

@@ -20,7 +20,7 @@ export interface NotesVideoHeadProps {
 export interface NoteSection {
   title: string;
   content: string;
-  subsections?: string[];
+  subsections?: { subTopicTitle: string; content: string }[]
   timestamp: string;
 }
 
@@ -51,4 +51,15 @@ export interface NotesComponent {
   DetailedNotes: React.ComponentType<DetailedNotesProps>;
   VideoHead: React.ComponentType<NotesVideoHeadProps>;
   VideoPlayer: React.ComponentType<VideoPlayerProps>;
+}
+
+export interface DetailedNotesProps {
+  sections: NoteSection[];
+}
+
+export interface GenerateNotesErrorComponentProps {
+  videoError?: string | null;
+  notesError?: string | null;
+  refetchNotes: () => void;
+  refetchVideo: () => void;
 }

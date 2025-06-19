@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GET_VIDEO_DETAILS } from '@/constants';
 import { YOUTUBE_API_KEY } from '@/constants';
-import type { VideoDetails, VideoRouteParams } from '@/types';
+import type { VideoData,  VideoRouteParams } from '@/types';
 
 export async function GET(
   request: Request,
@@ -23,12 +23,12 @@ export async function GET(
     if (!data.items || data.items.length === 0) {
       return NextResponse.json({ error: 'Video not found' }, { status: 404 });
     }
-
-    const videoDetails: VideoDetails = {
+    const videoDetails: VideoData = {
       title: data.items[0].snippet.title,
       videoId: videoId,
       duration: data.items[0].contentDetails.duration,
       channel: data.items[0].snippet.channelTitle,
+      thumbnailUrl: data.items[0].snippet.thumbnails.default.url,
     };
 
     return NextResponse.json(videoDetails);

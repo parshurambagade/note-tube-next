@@ -2,85 +2,71 @@
 
 import { useState } from "react";
 import Notes from "@/components/notes/index";
+import NotesLoading from "@/components/notes/notes-loading";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { useVideoData } from "@/hooks/useVideoData";
+import { NoteSection } from "@/types";
+import { useNotesGenerator } from "@/hooks/useNotesGenerator";
+import GenerateNotesErrorComponent from "@/components/notes/generate-notes-error-component";
 
 const Generate = () => {
   const [isSaved, setIsSaved] = useState(false);
   const { videoId } = useParams();
-  const { videoData, loading, error, refetch } = useVideoData(videoId);
+  const {
+    videoData,
+    loading: videoLoading,
+    error: videoError,
+    refetch: refetchVideo,
+  } = useVideoData(videoId);
 
-  // Mock data - in real app, this would come from props or API
-  const notes = {
-    summary:
-      "This comprehensive introduction to machine learning covers fundamental concepts, algorithms, and practical applications for beginners.",
-    keyPoints: [
-      "Machine Learning is a subset of Artificial Intelligence that enables computers to learn without explicit programming",
-      "Three main types: Supervised Learning, Unsupervised Learning, and Reinforcement Learning",
-      "Common algorithms include Linear Regression, Decision Trees, and Neural Networks",
-      "Data preprocessing is crucial for model performance",
-      "Cross-validation helps prevent overfitting",
-    ],
-    sections: [
-      {
-        title: "What is Machine Learning?",
-        content:
-          "Machine Learning (ML) is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.",
-        timestamp: "0:00 - 8:30",
-      },
-      {
-        title: "Types of Machine Learning",
-        content:
-          "There are three primary types of machine learning approaches:",
-        subsections: [
-          "Supervised Learning: Uses labeled training data to learn a mapping function",
-          "Unsupervised Learning: Finds hidden patterns in data without labeled examples",
-          "Reinforcement Learning: Learns through interaction with an environment",
-        ],
-        timestamp: "8:30 - 18:45",
-      },
-      {
-        title: "Common Algorithms",
-        content: "Popular machine learning algorithms include:",
-        subsections: [
-          "Linear Regression: Predicts continuous values",
-          "Decision Trees: Creates a model that predicts target values",
-          "Random Forest: Combines multiple decision trees",
-          "Support Vector Machines: Finds optimal decision boundaries",
-          "Neural Networks: Mimics the human brain's structure",
-        ],
-        timestamp: "18:45 - 32:10",
-      },
-      {
-        title: "Data Preprocessing",
-        content:
-          "Before applying ML algorithms, data must be cleaned and prepared. This includes handling missing values, scaling features, encoding categorical variables, and splitting data into training and testing sets.",
-        timestamp: "32:10 - 40:15",
-      },
-    ],
-  };
+  const {
+    notes,
+    loading: notesLoading,
+    error: notesError,
+    refetch: refetchNotes,
+  } = useNotesGenerator(videoId as string);
+
   const handleSave = () => {
     setIsSaved(true);
-    // In real app, implement save functionality
+    //TODO: Implement save functionality
     setTimeout(() => setIsSaved(false), 2000);
   };
 
-  if (loading) {
-    return <div>Loading video details...</div>;
+  // Show loading component while notes are being generated
+  if (notesLoading) {
+    return <NotesLoading videoData={videoData || undefined} />;
   }
 
-  if (error) {
+  // Show simple loading for video data only
+  if (videoLoading) {
     return (
-      <div>
-        <p>Error: {error}</p>
-        <button onClick={refetch}>Retry</button>
+      <div className="flex justify-center items-center min-h-screen my-20">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p>Loading video details...</p>
+        </div>
       </div>
     );
   }
 
+  if (videoError || notesError) {
+    return (
+      <GenerateNotesErrorComponent
+        videoError={videoError}
+        notesError={notesError}
+        refetchNotes={refetchNotes}
+        refetchVideo={refetchVideo}
+      />
+    );
+  }
+
   if (!videoData) {
-    return <div>No video data available</div>;
+    return <div className="text-center py-8">No video data available</div>;
+  }
+
+  if (!notes) {
+    return <div className="text-center py-8">No notes available</div>;
   }
 
   return (
@@ -92,14 +78,23 @@ const Generate = () => {
           isSaved={isSaved}
         />
         <Notes.VideoPlayer
-          title={videoData.title}
-          videoId={videoData.videoId}
+          title={videoData?.title}
+          videoId={videoData?.videoId}
         />
       </Notes.Head>
       <Notes.Body>
-        <Notes.KeyPoints keyPoints={notes.keyPoints} />
+        {notes.summary && (
+          <>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-3">Summary</h2>
+              <p className="text-gray-700">{notes.summary}</p>
+            </div>
+            <Separator className="my-8" />
+          </>
+        )}
+        <Notes.KeyPoints keyPoints={notes?.keyPoints} />
         <Separator className="my-8" />
-        <Notes.DetailedNotes sections={notes.sections} />
+        <Notes.DetailedNotes sections={notes?.sections as NoteSection[]} />
       </Notes.Body>
     </Notes>
   );

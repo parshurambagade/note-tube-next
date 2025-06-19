@@ -1,37 +1,53 @@
-import { useRouter } from "next/navigation";
-import { useYouTubeVideoId } from "./useYouTubeVideoId";
-import type { UseNotesGeneratorProps, UseNotesGeneratorReturn } from "@/types";
+import { useState, useEffect } from "react";
+import { NotesService } from "@/services/notesService";
+import { NotesData, UseNotesGeneratorProps } from "@/types";
 
-export const useNotesGenerator = ({ 
-  url, 
-  onNavigate 
-}: UseNotesGeneratorProps): UseNotesGeneratorReturn => {
-  const router = useRouter();
-  const { videoId, error, isValidVideoId } = useYouTubeVideoId(url);
+export const useNotesGenerator = (
+  videoId: string,
+): UseNotesGeneratorProps => {
+    
+  const [notes, setNotes] = useState<NotesData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleGenerateNotes = (): void => {
-    if (!isValidVideoId) return;
+  const generateNotes = async (id: string) => {
+    if (!id) {
+      setError("Video ID is required to generate notes");
+      return;
+    }
 
-    const navigateToNotes = () => router.push(`/notes/generate/${videoId}`);
+    setLoading(true);
+    setError(null);
 
-    if (onNavigate) {
-      onNavigate(videoId);
-    } else {
-      navigateToNotes();
+    try {
+      const notesData = await NotesService.generateNotes(id);
+      setNotes(notesData);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to generate notes";
+      setError(errorMessage);
+      console.error("Error fetching notes:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    if (isValidVideoId) {
-      handleGenerateNotes();
+  const refetch = async () => {
+    if (videoId && videoId.length === 11) {
+      await generateNotes(videoId);
     }
   };
+
+  useEffect(() => {
+    if (videoId && videoId.length === 11) {
+      generateNotes(videoId);
+    }
+  }, [videoId]);
 
   return {
-    videoId,
+    notes,
+    loading,
     error,
-    isValidVideoId,
-    handleSubmit
+    generateNotes,
+    refetch,
   };
 };

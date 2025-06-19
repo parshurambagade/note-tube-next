@@ -31,7 +31,7 @@ export class VideoService {
       }
 
       // Validate required fields
-      if (!data.title || !data.duration || !data.channel) {
+      if (!data.title || !data.duration || !data.channel || !data.thumbnailUrl ) {
         throw new Error('Incomplete video data received');
       }
 
@@ -40,6 +40,7 @@ export class VideoService {
         videoId,
         duration: formatYouTubeDuration(data.duration),
         channel: data.channel,
+        thumbnailUrl: data.thumbnailUrl,
       };
 
     } catch (error) {

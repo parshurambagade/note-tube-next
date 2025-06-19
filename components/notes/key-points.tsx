@@ -4,6 +4,10 @@ interface KeyPointsProps {
   keyPoints: string[];
 }
 const KeyPoints: React.FC<KeyPointsProps> = ({ keyPoints }) => {
+  if (!keyPoints || keyPoints.length === 0) {
+    return null;
+  }
+
   return (
     <div className="mb-8">
       <h3 className="text-xl font-semibold mb-4">Key Points</h3>

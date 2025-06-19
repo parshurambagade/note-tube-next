@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useNotesGenerator } from "@/hooks/useNotesGenerator";
+import { useNotesGeneratorForm } from "@/hooks/useNotesGeneratorForm";
 import type { NotesGeneratorFormProps } from "@/types";
-
 
 const NotesGeneratorForm: React.FC<NotesGeneratorFormProps> = ({
   onNavigate,
 }) => {
   const [url, setUrl] = useState(
-    "https://youtu.be/dRXq81Om2a4?si=40mhJXnYtcLoRNk1"
+    "https://youtu.be/lsf060bLH_Y?si=WN_YYbuxcLwaRSHq"
   );
-  const { error, isValidVideoId, handleSubmit } = useNotesGenerator({
+  const { error, isValidVideoId, handleSubmit } = useNotesGeneratorForm({
     url,
     onNavigate,
   });
@@ -32,7 +31,7 @@ const NotesGeneratorForm: React.FC<NotesGeneratorFormProps> = ({
           className="bg-accent w-full"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          aria-invalid={error}
+          aria-invalid={!!error}
           aria-describedby={error && url.trim() ? "url-error" : undefined}
           required
         />

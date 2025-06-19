@@ -5,6 +5,7 @@ export interface VideoData {
   videoId: string;
   duration: string;
   channel: string;
+  thumbnailUrl?: string;
 }
 
 export interface VideoApiResponse {
@@ -12,6 +13,7 @@ export interface VideoApiResponse {
   duration: string;
   channel: string;
   error?: string;
+  thumbnailUrl?: string;
 }
 
 export interface VideoDetails {

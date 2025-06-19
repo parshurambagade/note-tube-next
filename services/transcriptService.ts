@@ -1,3 +1,4 @@
+import { NEXTAUTH_URL } from "@/constants";
 
 
 export class TranscriptService {
@@ -6,7 +7,7 @@ export class TranscriptService {
             if(!videoId || videoId.length !== 11) {
                 throw new Error("Invalid YouTube video ID");
             }
-            const response = await fetch(`/api/transcript/${videoId}`);
+            const response = await fetch(`${NEXTAUTH_URL}/api/transcript/${videoId}`);
             const data = await response.json();
 
             if (!response.ok) {
