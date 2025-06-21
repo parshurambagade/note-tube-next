@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LogOut, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NavItem from "./nav-item";
@@ -15,6 +15,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/authContext";
+import { useLogout } from "@/hooks/useLogout";
 
 // Navigation items
 const navigationItems = [
@@ -25,6 +27,15 @@ const navigationItems = [
 export default function MainHeader() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const router = useRouter();
+  const { user } = useAuth();
+  const { handleLogout, isLoading: isLoggingOut } = useLogout();
+
+  const onLogout = () => {
+    handleLogout();
+    setIsMobileMenuOpen(false); // Close mobile menu on logout
+  };
 
   // Close mobile menu when path changes
   useEffect(() => {
@@ -61,35 +72,43 @@ export default function MainHeader() {
               })}
             </div>
           </nav>
-          {/* TODO: Add login button and conditionally render avatar and login button. */}
-          <div className="hidden md:flex">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex gap-2 items-center my-3 min-w-max">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                {/* TODO: Replace with the actual name of the user*/}
-                <p>John Doe</p>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {/* TODO: Add Logout logic  */}
-                <DropdownMenuItem
-                  className="cursor-pointer flex justify-center items-center gap-2"
-                  onClick={() => console.log("click")}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      console.log("click");
-                    }
-                  }}
-                >
-                  <LogOut className="h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {!user ? (
+            <Link href={"/login"} className="my-2 hidden md:flex">
+              <Button variant={"outline"} className="cursor-pointer">
+                Log In
+              </Button>
+            </Link>
+          ) : (
+            <div className="hidden md:flex">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex gap-2 items-center my-3 min-w-max">
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>
+                      {user?.user_metadata?.display_name}
+                    </AvatarFallback>
+                  </Avatar>
+                  <p>{user?.user_metadata?.display_name}</p>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    className="cursor-pointer flex justify-center items-center gap-2"
+                    onClick={() => onLogout()}
+                    disabled={isLoggingOut}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        onLogout();
+                      }
+                    }}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    {isLoggingOut ? "Logging out..." : "Logout"}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
 
           {/* Right side actions */}
           <div className="flex items-center space-x-4">
@@ -111,18 +130,39 @@ export default function MainHeader() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="py-4 space-y-1 shadow-b-lg border-b-2">
+          <div className="py-4 space-y-1 shadow-b-lg border-b-2 ">
             {/* Mobile Nav Links - Now with animated mobile nav items */}
-            <div className="flex flex-col gap-2 items-center my-6">
-              {/* TODO: Add login button and conditionally render avatar or button */}
-
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" width={200} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              {/* TODO: Replace with the actual name of the user*/}
-              <p>John Doe</p>
-            </div>
+            {!user ? (
+              <Link href={"/login"} className="mb-4 flex justify-center w-full md:hidden">
+                <Button variant={"outline"} className="cursor-pointer" tabIndex={-1}>
+                  Log In
+                </Button>
+              </Link>
+            ) : (
+              <div className="flex flex-col items-center my-6 gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      width={200}
+                    />
+                    <AvatarFallback>
+                      {user?.user_metadata?.display_name}
+                    </AvatarFallback>
+                  </Avatar>
+                  <p>{user?.user_metadata?.display_name}</p>
+                </div>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer flex w-max justify-center items-center gap-2"
+                  onClick={() => onLogout()}
+                  disabled={isLoggingOut}
+                >
+                  <LogOut className="h-4 w-4" />
+                  {isLoggingOut ? "Logging out..." : "Logout"}
+                </Button>
+              </div>
+            )}
             <div>
               {navigationItems.map((item) => {
                 const isActive = pathname === item.href;
