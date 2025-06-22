@@ -42,7 +42,6 @@ export const useRegister = () => {
       }
 
       if (data.user) {
-        console.log("User created successfully:", data);
         
         // Check for session
         const session = (await supabase.auth.getSession()).data.session;

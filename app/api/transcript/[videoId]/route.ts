@@ -9,7 +9,10 @@ export async function GET(
   { params }: TranscriptRouteParams
 ) {
   try {
+    console.log('Received request for transcript with params:', params)
     const { videoId } = await params;
+
+    console.log('Fetching transcript for videoId:', videoId);
     // Validate videoId
     if (!videoId || videoId.trim() === '') {
       return NextResponse.json(
@@ -27,6 +30,8 @@ export async function GET(
         { status: 404 }
       );
     }
+
+    console.log('Transcript fetched successfully:', transcript);
 
     // Format the transcript
     const formattedTranscript = transcript?.tracks[0]?.transcript?.map((entry: TranscriptItem) => entry.text).join(' ');

@@ -44,7 +44,7 @@ const NotesGeneratorForm: React.FC<NotesGeneratorFormProps> = ({
       <Button
         type="submit"
         disabled={!isValidVideoId}
-        className="w-full sm:flex-1/4"
+        className="w-full sm:flex-1/4 cursor-pointer"
         aria-label="Generate notes from YouTube video"
       >
         Generate Notes

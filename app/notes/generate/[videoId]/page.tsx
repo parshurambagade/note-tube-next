@@ -62,11 +62,11 @@ const Generate = () => {
   }
 
   if (!videoData) {
-    return <div className="text-center py-8">No video data available</div>;
+    return <main className="text-center py-8 min-h-screen">No video data available</main>;
   }
 
   if (!notes) {
-    return <div className="text-center py-8">No notes available</div>;
+    return <main className="text-center py-8 min-h-screen">No notes available</main>;
   }
 
   return (

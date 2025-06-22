@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const transcript = await TranscriptService.fetchYouTubeTranscript(videoId);
+        const transcript = await TranscriptService.fetchYouTubeTranscriptServer(videoId);
         
         if (!transcript || transcript.length === 0) {
             return NextResponse.json(

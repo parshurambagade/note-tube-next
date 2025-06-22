@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,7 +17,7 @@ import { useLogin } from "@/hooks/useLogin";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
-const Login = () => {
+function LoginForm() {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   
@@ -32,15 +32,15 @@ const Login = () => {
   } = useLogin();
 
   // Show toast when there's a message from redirect
- useEffect(() => {
-  if (message) {
-    toast.info(message, {
-       id: 'login-redirect',
-      duration: 4000,
-      description: "Please enter your credentials to continue"
-    });
-  }
-}, [message]);
+  useEffect(() => {
+    if (message) {
+      toast.info(message, {
+        id: 'login-redirect',
+        duration: 4000,
+        description: "Please enter your credentials to continue"
+      });
+    }
+  }, [message]);
 
   return (
     <main className="py-20 md:py-40 min-h-screen flex items-center md:items-start justify-center px-2 md:px-8">
@@ -110,6 +110,14 @@ const Login = () => {
         </CardContent>
       </Card>
     </main>
+  );
+}
+
+const Login = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 };
 

@@ -22,7 +22,7 @@ export const useLogout = () => {
         duration: 3000,
       });
       
-      // Redirect to login page
+      // Redirect to login
       router.push("/login");
     } catch (error) {
       console.error("Error logging out:", error);
