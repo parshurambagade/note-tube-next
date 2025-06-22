@@ -12,7 +12,7 @@ export const useVideoTranscript = (videoId: string | string[] | undefined): UseV
       setLoading(true);
       setError(null);
       
-      const data = await TranscriptService.fetchYouTubeTranscript(id);
+      const data = await TranscriptService.fetchYouTubeTranscriptClient(id);
       setTranscript(data as string);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch transcript';

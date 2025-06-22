@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Notes from "@/components/notes/index";
 import NotesLoading from "@/components/notes/notes-loading";
 import { Separator } from "@/components/ui/separator";
@@ -11,8 +10,8 @@ import { useNotesGenerator } from "@/hooks/useNotesGenerator";
 import GenerateNotesErrorComponent from "@/components/notes/generate-notes-error-component";
 
 const Generate = () => {
-  const [isSaved, setIsSaved] = useState(false);
   const { videoId } = useParams();
+  
   const {
     videoData,
     loading: videoLoading,
@@ -27,18 +26,13 @@ const Generate = () => {
     refetch: refetchNotes,
   } = useNotesGenerator(videoId as string);
 
-  const handleSave = () => {
-    setIsSaved(true);
-    //TODO: Implement save functionality
-    setTimeout(() => setIsSaved(false), 2000);
-  };
 
-  // Show loading component while notes are being generated
+
+  // Rest of your component logic remains the same...
   if (notesLoading) {
     return <NotesLoading videoData={videoData || undefined} />;
   }
 
-  // Show simple loading for video data only
   if (videoLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen my-20">
@@ -74,8 +68,7 @@ const Generate = () => {
       <Notes.Head>
         <Notes.VideoHead
           videoData={videoData}
-          handleSave={handleSave}
-          isSaved={isSaved}
+          notes={notes}
         />
         <Notes.VideoPlayer
           title={videoData?.title}

@@ -11,9 +11,8 @@ export interface NotesGeneratorFormProps {
 }
 
 export interface NotesVideoHeadProps {
-  handleSave: () => void;
-  isSaved: boolean;
   videoData: VideoData;
+  notes: NotesData;
 }
 
 // Notes content types
@@ -62,4 +61,17 @@ export interface GenerateNotesErrorComponentProps {
   notesError?: string | null;
   refetchNotes: () => void;
   refetchVideo: () => void;
+}
+
+export interface SavedNote {
+  id: string;
+  user_id: string;
+  video_id: string;
+  video_title: string;
+  video_channel: string;
+  video_duration: string;
+  video_thumbnail_url: string;
+  content: NotesData;
+  created_at: string;
+  updated_at: string;
 }

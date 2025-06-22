@@ -33,9 +33,18 @@ export async function middleware(request: NextRequest) {
 
   // Define public routes (accessible to all users)
   const publicRoutes = ['/']
+  const publicRoutePrefixes = [
+  '/notes/generate',
+  '/api/notes',
+  '/api/video', 
+  '/api/transcript' 
+]; 
   const authRoutes = ['/login', '/register']
   
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname)
+  const isPublicRoutePrefix = publicRoutePrefixes.some(prefix => 
+    request.nextUrl.pathname.startsWith(prefix)
+  )
   const isAuthRoute = authRoutes.some(route => 
     request.nextUrl.pathname.startsWith(route)
   )
@@ -47,8 +56,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Allow access to public routes for everyone
-  if (isPublicRoute) {
+  // Allow access to public routes and public route prefixes for everyone
+  if (isPublicRoute || isPublicRoutePrefix) {
     return supabaseResponse
   }
 
@@ -57,7 +66,7 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse
   }
 
-  if (!user && !isAuthRoute && !isPublicRoute) {
+  if (!user && !isAuthRoute && !isPublicRoute && !isPublicRoutePrefix) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('message', 'Authentication required')

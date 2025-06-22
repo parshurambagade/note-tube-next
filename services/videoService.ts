@@ -5,7 +5,7 @@ export class VideoService {
   static async getVideoDetails(videoId: string): Promise<VideoData> {
     try {
       // Validate input
-      if (!videoId || videoId.trim() === '') {
+      if (!videoId || !(videoId.trim().length === 11)) {
         throw new Error('Video ID is required');
       }
 
