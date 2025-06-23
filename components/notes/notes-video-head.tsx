@@ -14,17 +14,11 @@ const NotesVideoHead: React.FC<NotesVideoHeadProps> = ({
 }) => {
   const router = useRouter();
 
-    const { user } = useAuth();
+  const { user } = useAuth();
   // Custom hook to handle saving notes
-    const {
-      saveNotes,
-      isSaving,
-      isSaved,
-      checkIfSaved,
-    } = useSaveNotes();    
+  const { saveNotes, isSaving, isSaved, checkIfSaved } = useSaveNotes();
 
-   
-    const handleSave = async () => {
+  const handleSave = async () => {
     if (!videoData || !notes) {
       toast.error("Cannot save: Missing video data or notes");
       return;
@@ -32,14 +26,13 @@ const NotesVideoHead: React.FC<NotesVideoHeadProps> = ({
 
     await saveNotes(videoData, notes);
 
-    router.push(`/notes/${videoData.videoId}`);
+    router.push(`/notes/all`);
   };
 
-  
-    // Check if notes are already saved when component mounts
+  // Check if notes are already saved when component mounts
   useEffect(() => {
     if (user && videoData?.videoId) {
-   checkIfSaved(videoData?.videoId as string);
+      checkIfSaved(videoData?.videoId as string);
     }
   }, [user, videoData?.videoId, checkIfSaved]);
 
@@ -71,34 +64,34 @@ const NotesVideoHead: React.FC<NotesVideoHeadProps> = ({
           {isSaved ? (
             <DeleteConfirmationDialog videoId={videoData?.videoId || ""} />
           ) : (
-            <><Button
-            onClick={handleSave}
-            disabled={isSaving || isSaved}
-            className={
-              "hidden sm:flex text-base cursor-pointer" +
-              (isSaved ? "bg-green-600 hover:bg-green-700" : "")
-            }
-          >
-            <Save className="w-3 md:w-4 h-3 md:h-4 mr-2" />
-            {isSaved ? "Saved!" : isSaving ? "Saving Notes" :  "Save Notes"}
-          </Button>
+            <>
+              <Button
+                onClick={handleSave}
+                disabled={isSaving || isSaved}
+                className={
+                  "hidden sm:flex text-base cursor-pointer" +
+                  (isSaved ? "bg-green-600 hover:bg-green-700" : "")
+                }
+              >
+                <Save className="w-3 md:w-4 h-3 md:h-4 mr-2" />
+                {isSaved ? "Saved!" : isSaving ? "Saving Notes" : "Save Notes"}
+              </Button>
 
-          {/* Button for small devices */}
-          <Button
-            onClick={handleSave}
-            size="sm"
-            disabled={isSaving || isSaved}
-            className={
-              " sm:hidden text-sm cursor-pointer" +
-              (isSaved ? "bg-green-600 hover:bg-green-700" : "")
-            }
-          >
-            <Save className="w-3 md:w-4 h-3 md:h-4 mr-2" />
-            {isSaved ? "Saved!" : isSaving ? "Saving Notes" : "Save Notes"}
-          </Button>
-          </>
+              {/* Button for small devices */}
+              <Button
+                onClick={handleSave}
+                size="sm"
+                disabled={isSaving || isSaved}
+                className={
+                  " sm:hidden text-sm cursor-pointer" +
+                  (isSaved ? "bg-green-600 hover:bg-green-700" : "")
+                }
+              >
+                <Save className="w-3 md:w-4 h-3 md:h-4 mr-2" />
+                {isSaved ? "Saved!" : isSaving ? "Saving Notes" : "Save Notes"}
+              </Button>
+            </>
           )}
-          
         </div>
       </div>
     </div>

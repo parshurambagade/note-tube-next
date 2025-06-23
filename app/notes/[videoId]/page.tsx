@@ -51,7 +51,7 @@ const NotesPage = () => {
     return (
       <main className="text-center py-8 min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Notes not found</h1>
-        <p className="text-gray-600">The requested notes could not be found or you don&apost have permission to view them.</p>
+        <p className="text-gray-600">The requested notes could not be found or you don't have permission to view them.</p>
       </main>
     );
   }

@@ -15,13 +15,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const DeleteConfirmationDialog = ({videoId}: {videoId: string}) => {
-   const [open, setOpen] = useState(false);
-    const router = useRouter();
+const DeleteConfirmationDialog = ({ videoId }: { videoId: string }) => {
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
- const { deleteNotes, isDeleting, isDeleted } = useDeleteNotes();
+  const { deleteNotes, isDeleting, isDeleted } = useDeleteNotes();
 
-     const handleDelete = async () => {
+  const handleDelete = async () => {
     if (!videoId.length || !videoId) {
       toast.error("Cannot save: Missing video data or notes");
       return;
@@ -32,12 +32,17 @@ const DeleteConfirmationDialog = ({videoId}: {videoId: string}) => {
     router.replace("/notes/all");
   };
 
-  if(!videoId || videoId.length === 0)
-    return null; 
+  if (!videoId || videoId.length === 0) return null;
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger disabled={isDeleted || isDeleting} className="cursor-pointer px-2 py-1 md:px-3 md:py-2 text-sm md:text-base rounded-md bg-red-600 text-white flex items-center gap-2"><Trash2 className="h-4 w-4" />{isDeleting ? "Deleting Notes" : "Delete Notes"}</AlertDialogTrigger>
+      <AlertDialogTrigger
+        disabled={isDeleted || isDeleting}
+        className="cursor-pointer px-2 py-1 md:px-3 md:py-2 text-sm rounded-md bg-red-600 hover:bg-red-700 text-white flex items-center gap-2"
+      >
+        <Trash2 className="h-4 w-4" />
+        {isDeleting ? "Deleting Notes" : "Delete Notes"}
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
@@ -50,7 +55,12 @@ const DeleteConfirmationDialog = ({videoId}: {videoId: string}) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} className="bg-red-600 text-white hover:bg-red-500">Continue</AlertDialogAction>
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-red-600 text-white hover:bg-red-500"
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

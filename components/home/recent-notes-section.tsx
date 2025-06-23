@@ -1,5 +1,4 @@
 import React from "react";
-import NotesCard from "../common/notes-card";
 import Link from "next/link";
 
 const RecentNotesSection = () => {
@@ -10,9 +9,12 @@ const RecentNotesSection = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
         {/* TODO: Fetch latest notes and map the notes cards  */}
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
+        {/* <NotesCard notes={mockNote} /> */}
+        {/* <NotesCard notes={mockNote} /> */}
+        {/* <NotesCard notes={mockNote} /> */}
+        <p className="col-span-full text-center text-gray-500">
+          No recent notes available. Create your first note!
+        </p>
       </div>
       {/* TODO: replace 1 with actual notes id */}
       <Link

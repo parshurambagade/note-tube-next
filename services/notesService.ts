@@ -54,8 +54,6 @@ export class NotesService {
         throw new Error('You must be logged in to save notes');
       }
 
-      console.log("Saving notes for user:", user.id, "and video:", videoData.videoId);
-
       // Check if notes already exist for this user and video
       const { data: existingNotes, error: checkError } = await supabase
         .from('notes')

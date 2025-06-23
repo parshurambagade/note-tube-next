@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { TranscriptService } from "@/services/transcriptService";
 import type { UseVideoTranscriptReturn } from "@/types";
 
-export const useVideoTranscript = (videoId: string | string[] | undefined): UseVideoTranscriptReturn => {
+export const useVideoTranscript = (
+  videoId: string | string[] | undefined
+): UseVideoTranscriptReturn => {
   const [transcript, setTranscript] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -11,22 +13,22 @@ export const useVideoTranscript = (videoId: string | string[] | undefined): UseV
     try {
       setLoading(true);
       setError(null);
-      
+
       const data = await TranscriptService.fetchYouTubeTranscriptClient(id);
       setTranscript(data as string);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch transcript';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to fetch transcript";
       setError(errorMessage);
-      console.error('Error fetching video transcript:', err);
+      console.error("Error fetching video transcript:", err);
     } finally {
       setLoading(false);
     }
   };
 
-
   useEffect(() => {
     if (!videoId) return;
-    
+
     const id = Array.isArray(videoId) ? videoId[0] : videoId;
     if (id) {
       fetchVideoTranscript(id);

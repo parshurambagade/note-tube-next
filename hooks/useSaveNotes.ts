@@ -19,7 +19,6 @@ export const useSaveNotes = () => {
       toast.error("Missing video data or notes to save.");
       return false;
     }
-    console.log('Saving notes for video:', videoData.videoId);
     setIsSaving(true);
 
     try {
