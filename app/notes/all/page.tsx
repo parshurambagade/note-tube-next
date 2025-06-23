@@ -3,10 +3,21 @@
 import NotesCard from "@/components/common/notes-card";
 import BackButton from "@/components/common/back-button";
 import { useAllSavedNotesByUserId } from "@/hooks/useAllSavedNotes";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useSavedNotesStore from "@/stores/saved-notes-store";
 
 const AllNotes = () => {
-  const { allSavedNotes, loading, error } = useAllSavedNotesByUserId();
+  const [isClient, setIsClient] = useState(false);
+
+  const { loading, error } = useAllSavedNotesByUserId();
+
+  const { allSavedNotes } = useSavedNotesStore();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
 
   return (
     <main className="min-h-[95vh] py-20 px-4 container mx-auto">

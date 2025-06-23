@@ -1,14 +1,17 @@
 // hooks/useSaveNotes.ts
-import { useState } from 'react';
-import { NotesService } from '@/services/notesService';
-import { useAuth } from '@/contexts/authContext';
-import { toast } from 'sonner';
-import type { VideoData, NotesData } from '@/types';
+import { useState } from "react";
+import { NotesService } from "@/services/notesService";
+import { useAuth } from "@/contexts/authContext";
+import { toast } from "sonner";
+import type { VideoData, NotesData } from "@/types";
+import useSavedNotesStore from "@/stores/saved-notes-store";
 
 export const useSaveNotes = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const { user } = useAuth();
+
+  const { saveOneNotes } = useSavedNotesStore();
 
   const saveNotes = async (videoData: VideoData, notesData: NotesData) => {
     if (!user) {
@@ -23,17 +26,18 @@ export const useSaveNotes = () => {
 
     try {
       const savedNote = await NotesService.saveNotes(videoData, notesData);
-      
+
       setIsSaved(true);
       toast.success("Notes saved successfully!", {
         description: "You can find your saved notes in your dashboard.",
       });
-
+      saveOneNotes(savedNote);
       return savedNote;
     } catch (error) {
-      console.error('Error saving notes:', error);
+      console.error("Error saving notes:", error);
       toast.error("Failed to save notes", {
-        description: error instanceof Error ? error.message : "Please try again later.",
+        description:
+          error instanceof Error ? error.message : "Please try again later.",
       });
       return false;
     } finally {
@@ -49,7 +53,7 @@ export const useSaveNotes = () => {
       setIsSaved(!!exists);
       return exists;
     } catch (error) {
-      console.error('Error checking if note exists:', error);
+      console.error("Error checking if note exists:", error);
       return false;
     }
   };

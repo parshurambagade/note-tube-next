@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { NotesService } from "@/services/notesService";
 import { useAuth } from "@/contexts/authContext";
-import { SavedNote } from "@/types";
+import useSavedNotesStore from "@/stores/saved-notes-store";
 
 export const useAllSavedNotesByUserId = () => {
-  const [allSavedNotes, setAllSavedNotes] = useState<SavedNote[]>([]);
+  // const [allSavedNotes, setAllSavedNotes] = useState<SavedNote[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user, loading: authLoading } = useAuth();
+  const { allSavedNotes, addAllSavedNotes } = useSavedNotesStore();
 
   const fetchAllSavedNotes = async (userId: string) => {
     try {
@@ -20,13 +21,14 @@ export const useAllSavedNotesByUserId = () => {
 
       const notes = await NotesService.getAllSavedNotes(userId);
 
-      setAllSavedNotes(notes);
+      // setAllSavedNotes(notes);
+      addAllSavedNotes([...notes]);
     } catch (err) {
       console.error("Error fetching saved notes:", err);
       setError(
         err instanceof Error ? err.message : "Failed to fetch saved notes"
       );
-      setAllSavedNotes([]);
+      addAllSavedNotes([]);
     } finally {
       setLoading(false);
     }
@@ -38,17 +40,18 @@ export const useAllSavedNotesByUserId = () => {
       return;
     }
 
-    fetchAllSavedNotes(user?.id as string);
+    if (!allSavedNotes || allSavedNotes.length === 0) {
+      fetchAllSavedNotes(user?.id as string);
+    }
   }, [authLoading, user?.id]);
 
   const refetch = () => {
-    if (user?.id) {
+    if (user?.id && allSavedNotes?.length === 0) {
       fetchAllSavedNotes(user?.id);
     }
   };
 
   return {
-    allSavedNotes,
     loading,
     error,
     refetch,
