@@ -51,7 +51,6 @@ export default function MainHeader() {
         <div className="flex items-center justify-between w-full">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 min-w-max">
-            <span className="text-white font-bold text-lg">M</span>
             <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-indigo-600">
               NoteTube
             </span>
@@ -132,8 +131,15 @@ export default function MainHeader() {
           <div className="py-4 space-y-1 shadow-b-lg border-b-2 ">
             {/* Mobile Nav Links - Now with animated mobile nav items */}
             {!user ? (
-              <Link href={"/login"} className="mb-4 flex justify-center w-full md:hidden">
-                <Button variant={"outline"} className="cursor-pointer" tabIndex={-1}>
+              <Link
+                href={"/login"}
+                className="mb-4 flex justify-center w-full md:hidden"
+              >
+                <Button
+                  variant={"outline"}
+                  className="cursor-pointer"
+                  tabIndex={-1}
+                >
                   Log In
                 </Button>
               </Link>

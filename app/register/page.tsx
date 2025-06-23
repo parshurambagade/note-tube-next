@@ -28,7 +28,7 @@ const Register = () => {
   } = useRegister();
 
   return (
-    <main className="py-20 md:py-40 min-h-screen flex items-center md:items-start justify-center px-2 md:px-8">
+    <main className="py-20 md:py-40 min-h-[95vh] flex items-center md:items-start justify-center px-2 md:px-8">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Create an account</CardTitle>
@@ -50,9 +50,7 @@ const Register = () => {
           <form onSubmit={handleRegister}>
             <div className="flex flex-col gap-6">
               {error && (
-                <div className="text-red-500 text-sm text-center">
-                  {error}
-                </div>
+                <div className="text-red-500 text-sm text-center">{error}</div>
               )}
               <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
@@ -94,7 +92,11 @@ const Register = () => {
                   disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full cursor-pointer"
+                disabled={isLoading}
+              >
                 {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
             </div>

@@ -7,7 +7,7 @@ const GenerateNotesErrorComponent = ({
   refetchVideo,
 }: GenerateNotesErrorComponentProps) => {
   return (
-    <main className="max-w-2xl mx-auto p-6 min-h-screen mt-20">
+    <section className="max-w-2xl mx-auto p-6 min-h-[95vh]">
       <div className="text-center bg-red-50 border border-red-200 rounded-lg p-6">
         <h2 className="text-xl font-semibold text-red-800 mb-2">
           Something went wrong
@@ -18,12 +18,12 @@ const GenerateNotesErrorComponent = ({
             refetchVideo();
             refetchNotes();
           }}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors cursor-pointer"
         >
           Try Again
         </button>
       </div>
-    </main>
+    </section>
   );
 };
 

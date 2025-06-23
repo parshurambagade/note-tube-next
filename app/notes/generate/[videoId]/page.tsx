@@ -5,18 +5,18 @@ import NotesLoading from "@/components/notes/notes-loading";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { useVideoData } from "@/hooks/useVideoData";
-import { NoteSection } from "@/types";
+import { NotesData, NoteSection, VideoData } from "@/types";
 import { useNotesGenerator } from "@/hooks/useNotesGenerator";
 import GenerateNotesErrorComponent from "@/components/notes/generate-notes-error-component";
+import BackButton from "@/components/common/back-button";
 
 const Generate = () => {
   const { videoId } = useParams();
-  
+
   const {
     videoData,
     loading: videoLoading,
     error: videoError,
-    refetch: refetchVideo,
   } = useVideoData(videoId);
 
   const {
@@ -26,70 +26,56 @@ const Generate = () => {
     refetch: refetchNotes,
   } = useNotesGenerator(videoId as string);
 
-
-
-  // Rest of your component logic remains the same...
-  if (notesLoading) {
-    return <NotesLoading videoData={videoData || undefined} />;
-  }
-
-  if (videoLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen my-20">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p>Loading video details...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (videoError || notesError) {
-    return (
-      <GenerateNotesErrorComponent
-        videoError={videoError}
-        notesError={notesError}
-        refetchNotes={refetchNotes}
-        refetchVideo={refetchVideo}
-      />
-    );
-  }
-
-  if (!videoData) {
-    return <main className="text-center py-8 min-h-screen">No video data available</main>;
-  }
-
-  if (!notes) {
-    return <main className="text-center py-8 min-h-screen">No notes available</main>;
-  }
-
   return (
-    <Notes>
-      <Notes.Head>
-        <Notes.VideoHead
-          videoData={videoData}
-          notes={notes}
+    <main className="min-h-[95vh] py-20 px-2 md:px-4 container mx-auto">
+      <div className="flex items-center gap-4 mb-6">
+        <BackButton />
+      </div>
+
+      {notesLoading && <NotesLoading videoData={videoData || undefined} />}
+
+      {notesError && !notesLoading && (
+        <GenerateNotesErrorComponent
+          videoError={videoError}
+          notesError={notesError}
+          refetchNotes={refetchNotes}
+          refetchVideo={() => {}} // No video refetch needed for saved notes
         />
-        <Notes.VideoPlayer
-          title={videoData?.title}
-          videoId={videoData?.videoId}
-        />
-      </Notes.Head>
-      <Notes.Body>
-        {notes.summary && (
-          <>
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-3">Summary</h2>
-              <p className="text-gray-700">{notes.summary}</p>
-            </div>
-            <Separator className="my-8" />
-          </>
-        )}
-        <Notes.KeyPoints keyPoints={notes?.keyPoints} />
-        <Separator className="my-8" />
-        <Notes.DetailedNotes sections={notes?.sections as NoteSection[]} />
-      </Notes.Body>
-    </Notes>
+      )}
+
+      {(!videoData || !notes) && !notesLoading && !videoLoading && (
+        <section className="text-center py-8 min-h-[95vh]">
+          Invalid notes data
+        </section>
+      )}
+
+      <Notes>
+        <Notes.Head>
+          <Notes.VideoHead
+            videoData={videoData as VideoData}
+            notes={notes as NotesData}
+          />
+          <Notes.VideoPlayer
+            title={videoData?.title || ""}
+            videoId={videoData?.videoId || ""}
+          />
+        </Notes.Head>
+        <Notes.Body>
+          {notes?.summary && (
+            <>
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-3">Summary</h2>
+                <p className="text-gray-700">{notes.summary}</p>
+              </div>
+              <Separator className="my-8" />
+            </>
+          )}
+          <Notes.KeyPoints keyPoints={notes?.keyPoints || []} />
+          <Separator className="my-8" />
+          <Notes.DetailedNotes sections={notes?.sections as NoteSection[]} />
+        </Notes.Body>
+      </Notes>
+    </main>
   );
 };
 

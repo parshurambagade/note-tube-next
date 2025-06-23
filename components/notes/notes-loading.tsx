@@ -8,7 +8,10 @@ interface NotesLoadingProps {
 
 const NotesLoading = ({ videoData }: NotesLoadingProps) => {
   return (
-    <div className="max-w-4xl mx-auto p-6 my-20">
+    <section
+      aria-label="Notes loading skeleton"
+      className="max-w-4xl mx-auto p-6"
+    >
       {/* Video Header */}
       {videoData && (
         <div className="mb-8">
@@ -119,7 +122,7 @@ const NotesLoading = ({ videoData }: NotesLoadingProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

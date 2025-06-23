@@ -19,8 +19,8 @@ import { toast } from "sonner";
 
 function LoginForm() {
   const searchParams = useSearchParams();
-  const message = searchParams.get('message');
-  
+  const message = searchParams.get("message");
+
   const {
     email,
     setEmail,
@@ -35,15 +35,15 @@ function LoginForm() {
   useEffect(() => {
     if (message) {
       toast.info(message, {
-        id: 'login-redirect',
+        id: "login-redirect",
         duration: 4000,
-        description: "Please enter your credentials to continue"
+        description: "Please enter your credentials to continue",
       });
     }
   }, [message]);
 
   return (
-    <main className="py-20 md:py-40 min-h-screen flex items-center md:items-start justify-center px-2 md:px-8">
+    <main className="py-20 md:py-40 min-h-[95vh] flex items-center md:items-start justify-center px-2 md:px-8">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
@@ -62,9 +62,7 @@ function LoginForm() {
           <form onSubmit={handleLogin}>
             <div className="flex flex-col gap-6">
               {error && (
-                <div className="text-red-500 text-sm text-center">
-                  {error}
-                </div>
+                <div className="text-red-500 text-sm text-center">{error}</div>
               )}
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -102,7 +100,11 @@ function LoginForm() {
                   disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full cursor-pointer"
+                disabled={isLoading}
+              >
                 {isLoading ? "Logging in..." : "Login to your account"}
               </Button>
             </div>

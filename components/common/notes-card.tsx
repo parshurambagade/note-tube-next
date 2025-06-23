@@ -22,7 +22,7 @@ const NotesCard = ({ notes }: { notes: SavedNote }) => {
 
   return (
     <Link href={`/notes/${notes?.video_id}`}>
-      <Card className="max-w-full py-0 gap-2 cursor-pointer">
+      <Card className="max-w-full py-0 gap-2 cursor-pointer hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="p-0">
           <Image
             src={notes?.video_thumbnail_url}
