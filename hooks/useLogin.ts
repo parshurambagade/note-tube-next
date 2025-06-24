@@ -36,21 +36,29 @@ export const useLogin = () => {
       } else if (data.user) {
         setEmail("");
         setPassword("");
-        
+
         // Show success toast
         toast.success("Welcome back!", {
           description: "You have been successfully logged in.",
         });
-        
-        // Redirect to the page they were trying to access, or home
-        const redirectTo = searchParams.get('redirectTo') || '/';
-        router.push(redirectTo);
+
+        // 🔧 Wait for auth state to be properly set
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        // Force a page refresh to ensure auth state is updated
+        const redirectTo = searchParams.get("redirectTo") || "/";
+
+        // 🔧 Use window.location for more reliable redirect in production
+        window.location.href = redirectTo;
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      const errorMessage = error instanceof Error ? error.message : "An error occurred while logging in. Please try again.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An error occurred while logging in. Please try again.";
       setError(errorMessage);
-      
+
       // Also show error toast
       toast.error("Login failed", {
         description: errorMessage,
