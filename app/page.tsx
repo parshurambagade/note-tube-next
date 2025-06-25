@@ -2,6 +2,7 @@
 import React from "react";
 import NotesGenerator from "@/components/home/notes-generator";
 import RecentNotesSection from "@/components/home/recent-notes-section";
+import RecentlyGeneratedSection from "@/components/home/recently-generated-section";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       </div>
       <NotesGenerator />
       <RecentNotesSection />
+      <RecentlyGeneratedSection />
     </main>
   );
 }

@@ -3,12 +3,14 @@ import { useRouter } from "next/navigation";
 import supabase from "@/utils/supabase/client";
 import { toast } from "sonner";
 import useSavedNotesStore from "@/stores/saved-notes-store";
+import useRecentlyGeneratedNotesStore from "@/stores/recently-generated-notes-store";
 
 export const useLogout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { clearSavedNotes } = useSavedNotesStore();
+  const { clearGeneratedNotes } = useRecentlyGeneratedNotesStore();
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -19,7 +21,9 @@ export const useLogout = () => {
         throw new Error(error.message);
       }
 
+      // Clear both stores on logout
       clearSavedNotes();
+      clearGeneratedNotes();
 
       // Show success toast
       toast.success("Logged out successfully", {

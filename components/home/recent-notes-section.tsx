@@ -19,9 +19,12 @@ const RecentNotesSection = () => {
   if (!isClient) return null;
 
   return (
-    <section className="flex container mx-auto flex-col gap-4 mt-8">
-      <h2 className="text-2xl font-[700] text-center">
-        Recently Generate Notes
+    <section
+      aria-labelledby="recent-saved"
+      className="flex container mx-auto flex-col gap-4 mt-8"
+    >
+      <h2 id="recent-saved" className="text-2xl font-[700] text-center">
+        Recent Saved Notes
       </h2>
       <div className="max-w-2xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
         {allSavedNotes && allSavedNotes.length > 0 ? (
