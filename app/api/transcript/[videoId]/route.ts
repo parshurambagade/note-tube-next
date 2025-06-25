@@ -1,57 +1,60 @@
 import { NextResponse } from "next/server";
-import TranscriptClient from "youtube-transcript-api";
 import type { TranscriptItem, TranscriptRouteParams } from "@/types";
+import { YOUTUBE_TRANSCRIPT_API_URL } from "@/constants";
 
-const client = new TranscriptClient();
-
-export async function GET(
-  request: Request, 
-  { params }: TranscriptRouteParams
-) {
+export async function GET(request: Request, { params }: TranscriptRouteParams) {
   try {
     const { videoId } = await params;
 
     // Validate videoId
-    if (!videoId || videoId.trim() === '') {
+    if (!videoId || videoId.trim() === "") {
       return NextResponse.json(
-        { error: 'Video ID is required' }, 
+        { error: "Video ID is required" },
         { status: 400 }
       );
     }
 
-    await client.ready; // wait for client initialization
-    const transcript = await client.getTranscript(videoId);
-    
-    if (!transcript || !transcript.tracks || transcript.tracks.length === 0 || !transcript.tracks[0].transcript) {
-      return NextResponse.json(
-        { error: 'No transcript available for this video' }, 
-        { status: 404 }
-      );
-    }
+    const options = {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key":
+          process.env.NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_KEY || "",
+        "x-rapidapi-host":
+          process.env.NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_HOST || "",
+      },
+    };
+    const url = `${YOUTUBE_TRANSCRIPT_API_URL}${videoId.trim()}`;
+    const response = await fetch(url, options);
+    const json = await response.json();
+    const result = json?.transcript as TranscriptItem[];
 
+    const formattedTranscript = result
+      ?.map((entry: TranscriptItem) => entry.text)
+      .join(" ");
 
-    // Format the transcript
-    const formattedTranscript = transcript?.tracks[0]?.transcript?.map((entry: TranscriptItem) => entry.text).join(' ');
-    
     if (!formattedTranscript) {
       return NextResponse.json(
-        { error: 'Transcript is empty or not available' }, 
+        { error: "No transcript available for this video" },
         { status: 404 }
       );
     }
-    
-    return NextResponse.json({
-      videoId,
-      transcript: formattedTranscript,
-      rawTranscript: transcript?.tracks[0]?.transcript,
-    }, { status: 200 });
 
+    return NextResponse.json(
+      {
+        videoId,
+        transcript: formattedTranscript,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Error fetching transcript:', error);
-    
+    console.error("Error fetching transcript:", error);
+
     // Return proper error response instead of null
     return NextResponse.json(
-      { error: 'Failed to fetch transcript. Video may not have captions available.' },
+      {
+        error:
+          "Failed to fetch transcript. Video may not have captions available.",
+      },
       { status: 500 }
     );
   }
