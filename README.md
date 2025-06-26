@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 📘 NotesGen AI – Smart YouTube Notes Generator
 
-First, run the development server:
+An AI-powered web app that generates structured notes from YouTube videos using Google Generative AI. Built with Next.js 14 App Router, TypeScript, Zustand, Tailwind CSS, and Supabase.
+
+> 🚀 Generate concise notes from educational videos instantly with AI. Perfect for students, creators, and lifelong learners.
+
+![Screenshot](public/screenshot.png) 
+
+---
+
+## ✨ Features
+
+- 🎯 **AI Notes Generation**: Generate smart notes using Google Generative AI.
+- 📺 **YouTube Integration**: Extract transcripts and generate context-aware summaries.
+- 💾 **Smart Caching**: Caches notes for 24 hours to avoid redundant API calls and reduce cost.
+- 🗂️ **Saved Notes Management**: Save, view, and delete notes with a dedicated dashboard.
+- 🔐 **Authentication**: Secure login/signup with Supabase Auth.
+- ⚙️ **Global State Management**: Used Zustand stores for saved notes, caching, and app state.
+- 📱 **Responsive UI**: Mobile and tablet-friendly layout using Tailwind CSS + ShadCN.
+- 📊 **Cache Statistics**: Track cache behavior and expiry.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category       | Tech Used                                      |
+| -------------- | ---------------------------------------------- |
+| Framework      | [Next.js 14 (App Router)](https://nextjs.org/) |
+| Language       | TypeScript                                     |
+| Styling        | Tailwind CSS, ShadCN UI                        |
+| State Mgmt     | Zustand, Context API                           |
+| AI Integration | Google Generative AI (via fetch API)           |
+| Auth           | Supabase Auth                                  |
+| Data Handling  | TanStack Table, REST API                       |
+| Hosting        | Vercel                                         |
+
+---
+
+## 📸 Demo
+
+🔗 **Live App:** [notes-gen-ai.vercel.app](https://notes-gen-ai.vercel.app)  
+🔗 **Portfolio:** [mrparshu.live](https://mrparshu.live)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/parshuram-bagade/notes-gen-ai.git
+
+cd notes-gen-ai
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+Create a .env.local file:
+```text
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_YOUTUBE_API_KEY=
+NEXT_GEMINI_API_KEY=
+NEXTAUTH_URL=http://localhost:3000
+NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_API_KEY=
+NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_HOST=
+```
+### 4. Run the dev server
+```bash
+pnpm dev
+```
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 Folder Structure
+```
+app/                 → Next.js App Router Pages & Layouts
+components/          → Reusable UI Components
+hooks/               → Custom React Hooks
+lib/                 → Services, utils, and types
+store/               → Zustand Global State Stores
+public/              → Static files (images, icons, etc.)
+```
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Feel free to fork the repo, raise issues, or open PRs.
+For major changes, please open an issue first to discuss what you’d like to change.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📧 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Made with ❤️ by Parshuram Bagade 
+
+🔗 Connect on [LinkedIn](https://www.linkedin.com/in/parshuram-bagade/) | ✉️ [parshuram.dev@outlook.com](mailto:parshuram.dev@outlook.com)
+

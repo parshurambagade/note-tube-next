@@ -1,9 +1,7 @@
 import { YOUTUBE_TRANSCRIPT_API_URL } from "@/constants";
 import { TranscriptItem } from "@/types";
-import TranscriptClient from "youtube-transcript-api";
 
 export class TranscriptService {
-  private static client = new TranscriptClient();
 
   // Server-side method - direct API call
   static async fetchYouTubeTranscript(videoId: string): Promise<string | null> {

@@ -17,8 +17,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NoteTube - AI Powered YouTube Notes",
-  description: "Generate AI-powered notes from YouTube lectures with NoteTube.",
+  title: "NotesGen AI - AI Powered YouTube Notes",
+  description:
+    "Generate AI-powered notes from YouTube lectures with NotesGen AI.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    other: [
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        url: "/favicon-32x32.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        url: "/favicon-16x16.png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

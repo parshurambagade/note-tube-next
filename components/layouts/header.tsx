@@ -52,7 +52,7 @@ export default function MainHeader() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 min-w-max">
             <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-indigo-600">
-              NoteTube
+              NotesGen AI
             </span>
           </Link>
 

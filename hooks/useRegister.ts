@@ -32,9 +32,9 @@ export const useRegister = () => {
         password,
         options: {
           data: {
-            display_name: name
-          }
-        }
+            display_name: name,
+          },
+        },
       });
 
       if (error) {
@@ -42,7 +42,6 @@ export const useRegister = () => {
       }
 
       if (data.user) {
-        
         // Check for session
         const session = (await supabase.auth.getSession()).data.session;
         if (!session) {
@@ -51,7 +50,7 @@ export const useRegister = () => {
 
         // Show success toast
         toast.success("Account created successfully!", {
-          description: "Welcome to NoteTube! You're now logged in.",
+          description: "Welcome to NotesGen AI! You're now logged in.",
           duration: 4000,
         });
 
@@ -59,7 +58,7 @@ export const useRegister = () => {
         setName("");
         setEmail("");
         setPassword("");
-        
+
         // Redirect to home page
         router.push("/");
       } else {
@@ -67,9 +66,12 @@ export const useRegister = () => {
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred. Please try again.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred. Please try again.";
       setError(errorMessage);
-      
+
       // Show error toast
       toast.error("Registration failed", {
         description: errorMessage,
@@ -83,7 +85,7 @@ export const useRegister = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setError(null); // Clear error when user starts typing
-    
+
     switch (id) {
       case "name":
         setName(value);
