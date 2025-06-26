@@ -10,7 +10,7 @@ const KeyPoints: React.FC<KeyPointsProps> = ({ keyPoints }) => {
 
   return (
     <div className="mb-8">
-      <h3 className="text-xl font-semibold mb-4">Key Points</h3>
+      <h2 className="text-xl font-semibold mb-4">Key Points</h2>
       <ul className="space-y-3">
         {keyPoints.map((point, index) => (
           <li key={index} className="flex items-start gap-3">

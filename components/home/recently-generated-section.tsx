@@ -33,7 +33,10 @@ const RecentlyGeneratedSection: React.FC = () => {
     router.push(`/notes/generate/${videoId}`);
   };
 
-  const handleRemoveNote = (videoId: string, event: React.MouseEvent) => {
+  const handleRemoveNote = (
+    videoId: string,
+    event: React.MouseEvent | React.KeyboardEvent
+  ) => {
     event.stopPropagation();
     removeGeneratedNote(videoId);
   };
@@ -43,7 +46,7 @@ const RecentlyGeneratedSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full max-w-6xl mx-auto mt-12 px-4">
+    <section className="w-full max-w-2xl mx-auto mt-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
         <div className="flex items-center gap-2">
           <FileText className="h-5 w-5 text-primary" />
@@ -59,6 +62,7 @@ const RecentlyGeneratedSection: React.FC = () => {
             variant="outline"
             size="sm"
             onClick={handleClearAll}
+            aria-label="Clear all cached notes"
             className="cursor-pointer text-red-600 hover:text-red-700 w-full sm:w-auto"
           >
             <Trash2 className="h-4 w-4 mr-1" />
@@ -67,12 +71,18 @@ const RecentlyGeneratedSection: React.FC = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
         {recentlyGeneratedNotes.slice(0, 6).map((note) => (
           <Card
             key={note.videoId}
             className="cursor-pointer hover:shadow-md transition-shadow"
             onClick={() => handleViewNotes(note.videoId)}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleViewNotes(note.videoId);
+              }
+            }}
           >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between gap-2">
@@ -84,6 +94,12 @@ const RecentlyGeneratedSection: React.FC = () => {
                   size="sm"
                   className="h-6 w-6 p-0 text-gray-500 hover:text-red-600 flex-shrink-0"
                   onClick={(e) => handleRemoveNote(note.videoId, e)}
+                  aria-label="Remove from cache"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleRemoveNote(note.videoId, e);
+                    }
+                  }}
                 >
                   <Trash2 className="h-3 w-3" />
                 </Button>

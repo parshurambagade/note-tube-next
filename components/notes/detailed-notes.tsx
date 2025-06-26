@@ -7,14 +7,14 @@ const DetailedNotes: React.FC<DetailedNotesProps> = ({ sections }) => {
   }
   return (
     <div>
-      <h3 className="text-xl font-semibold mb-6">Detailed Notes</h3>
+      <h2 className="text-xl font-semibold mb-6">Detailed Notes</h2>
       <div className="space-y-8">
         {sections.map((section, index) => (
           <div key={index} className="border-l-4 border-blue-200 pl-6">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {section.title}
-              </h4>
+              </h3>
               {/* TODO: Add timestamp badge in future updates */}
               {/* <Badge variant="outline" className="text-xs">
                 {section.timestamp}

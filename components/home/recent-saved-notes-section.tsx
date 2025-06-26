@@ -5,8 +5,9 @@ import Link from "next/link";
 import useSavedNotesStore from "@/stores/saved-notes-store";
 import { useAllSavedNotesByUserId } from "@/hooks/useAllSavedNotes";
 import NotesCard from "../common/notes-card";
+import { Save } from "lucide-react";
 
-const RecentNotesSection = () => {
+const RecentSavedNotesSection = () => {
   const [isClient, setIsClient] = useState(false);
   const { allSavedNotes } = useSavedNotesStore();
 
@@ -21,11 +22,14 @@ const RecentNotesSection = () => {
   return (
     <section
       aria-labelledby="recent-saved"
-      className="flex container mx-auto flex-col gap-4 mt-8"
+      className="flex max-w-max container mx-auto flex-col gap-4 mt-8"
     >
-      <h2 id="recent-saved" className="text-2xl font-[700] text-center">
-        Recent Saved Notes
-      </h2>
+      <div className="flex items-center gap-2">
+        <Save className="h-5 w-5 text-primary" />
+        <h2 id="recent-saved" className="text-2xl font-[700]">
+          Recent Saved Notes
+        </h2>
+      </div>
       <div className="max-w-2xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
         {allSavedNotes && allSavedNotes.length > 0 ? (
           allSavedNotes
@@ -47,4 +51,4 @@ const RecentNotesSection = () => {
   );
 };
 
-export default RecentNotesSection;
+export default RecentSavedNotesSection;

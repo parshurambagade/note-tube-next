@@ -1,11 +1,10 @@
-
 # 📘 NotesGen AI – Smart YouTube Notes Generator
 
 An AI-powered web app that generates structured notes from YouTube videos using Google Generative AI. Built with Next.js 14 App Router, TypeScript, Zustand, Tailwind CSS, and Supabase.
 
 > 🚀 Generate concise notes from educational videos instantly with AI. Perfect for students, creators, and lifelong learners.
 
-![Screenshot](public/screenshot.png) 
+![Screenshot](public/screenshot.png)
 
 ---
 
@@ -32,7 +31,7 @@ An AI-powered web app that generates structured notes from YouTube videos using 
 | State Mgmt     | Zustand, Context API                           |
 | AI Integration | Google Generative AI (via fetch API)           |
 | Auth           | Supabase Auth                                  |
-| Data Handling  | TanStack Table, REST API                       |
+| Data Handling  | REST API                                       |
 | Hosting        | Vercel                                         |
 
 ---
@@ -63,6 +62,7 @@ pnpm install
 ### 3. Set up environment variables
 
 Create a .env.local file:
+
 ```text
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
@@ -72,13 +72,17 @@ NEXTAUTH_URL=http://localhost:3000
 NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_API_KEY=
 NEXT_YOUTUBE_TRANSCRIPT_RAPID_API_HOST=
 ```
+
 ### 4. Run the dev server
+
 ```bash
 pnpm dev
 ```
+
 ---
 
 ## 📂 Folder Structure
+
 ```
 app/                 → Next.js App Router Pages & Layouts
 components/          → Reusable UI Components
@@ -87,6 +91,7 @@ lib/                 → Services, utils, and types
 store/               → Zustand Global State Stores
 public/              → Static files (images, icons, etc.)
 ```
+
 ---
 
 ## 🤝 Contributions
@@ -98,7 +103,6 @@ For major changes, please open an issue first to discuss what you’d like to ch
 
 ## 📧 Contact
 
-Made with ❤️ by Parshuram Bagade 
+Made with ❤️ by Parshuram Bagade
 
 🔗 Connect on [LinkedIn](https://www.linkedin.com/in/parshuram-bagade/) | ✉️ [parshuram.dev@outlook.com](mailto:parshuram.dev@outlook.com)
-

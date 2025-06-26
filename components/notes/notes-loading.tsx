@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { VideoData } from "@/types";
+import Image from "next/image";
 
 interface NotesLoadingProps {
   videoData?: VideoData;
@@ -18,10 +19,12 @@ const NotesLoading = ({ videoData }: NotesLoadingProps) => {
           <Card className="p-6">
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <img
-                  src={videoData.thumbnailUrl}
+                <Image
+                  src={videoData?.thumbnailUrl || ""}
                   alt={videoData.title}
                   className="w-32 h-20 object-cover rounded-lg"
+                  width={100}
+                  height={80}
                 />
               </div>
               <div className="flex-1">

@@ -81,7 +81,10 @@ export default function MainHeader() {
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex gap-2 items-center my-3 min-w-max">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="User Avatar"
+                    />
                     <AvatarFallback>
                       {user?.user_metadata?.display_name}
                     </AvatarFallback>
@@ -116,6 +119,7 @@ export default function MainHeader() {
               size="icon"
               className="md:hidden my-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -150,6 +154,7 @@ export default function MainHeader() {
                     <AvatarImage
                       src="https://github.com/shadcn.png"
                       width={200}
+                      alt="User Avatar"
                     />
                     <AvatarFallback>
                       {user?.user_metadata?.display_name}
