@@ -11,7 +11,7 @@ const NotesLoading = ({ videoData }: NotesLoadingProps) => {
   return (
     <section
       aria-label="Notes loading skeleton"
-      className="max-w-4xl mx-auto p-6"
+      className="max-w-4xl w-full mx-auto px-2 md:px-4"
     >
       {/* Video Header */}
       {videoData && (

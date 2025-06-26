@@ -17,6 +17,7 @@ const Generate = () => {
     videoData,
     loading: videoLoading,
     error: videoError,
+    refetch: refetchVideo,
   } = useVideoData(videoId);
 
   const {
@@ -39,7 +40,7 @@ const Generate = () => {
           videoError={videoError}
           notesError={notesError}
           refetchNotes={refetchNotes}
-          refetchVideo={() => {}} // No video refetch needed for saved notes
+          refetchVideo={refetchVideo}
         />
       )}
 
@@ -48,33 +49,41 @@ const Generate = () => {
           Invalid notes data
         </section>
       )}
-
-      <Notes>
-        <Notes.Head>
-          <Notes.VideoHead
-            videoData={videoData as VideoData}
-            notes={notes as NotesData}
-          />
-          <Notes.VideoPlayer
-            title={videoData?.title || ""}
-            videoId={videoData?.videoId || ""}
-          />
-        </Notes.Head>
-        <Notes.Body>
-          {notes?.summary && (
-            <>
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-3">Summary</h2>
-                <p className="text-gray-700">{notes.summary}</p>
-              </div>
+      {!notesLoading &&
+        !videoLoading &&
+        !notesError &&
+        !videoError &&
+        videoData &&
+        notes && (
+          <Notes>
+            <Notes.Head>
+              <Notes.VideoHead
+                videoData={videoData as VideoData}
+                notes={notes as NotesData}
+              />
+              <Notes.VideoPlayer
+                title={videoData?.title || ""}
+                videoId={videoData?.videoId || ""}
+              />
+            </Notes.Head>
+            <Notes.Body>
+              {notes?.summary && (
+                <>
+                  <div className="mb-6">
+                    <h2 className="text-xl font-semibold mb-3">Summary</h2>
+                    <p className="text-gray-700">{notes.summary}</p>
+                  </div>
+                  <Separator className="my-8" />
+                </>
+              )}
+              <Notes.KeyPoints keyPoints={notes?.keyPoints || []} />
               <Separator className="my-8" />
-            </>
-          )}
-          <Notes.KeyPoints keyPoints={notes?.keyPoints || []} />
-          <Separator className="my-8" />
-          <Notes.DetailedNotes sections={notes?.sections as NoteSection[]} />
-        </Notes.Body>
-      </Notes>
+              <Notes.DetailedNotes
+                sections={notes?.sections as NoteSection[]}
+              />
+            </Notes.Body>
+          </Notes>
+        )}
     </main>
   );
 };

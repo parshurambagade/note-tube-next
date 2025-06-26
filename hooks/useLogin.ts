@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import supabase from "@/utils/supabase/client";
 import { validateLoginForm } from "@/utils/validation";
 import { toast } from "sonner";
 
 export const useLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("zengreider1@ysosirius.com");
+  const [password, setPassword] = useState("Test@123");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const handleLogin = async (e: React.FormEvent) => {

@@ -7,7 +7,7 @@ const GenerateNotesErrorComponent = ({
   refetchVideo,
 }: GenerateNotesErrorComponentProps) => {
   return (
-    <section className="max-w-2xl mx-auto p-6 min-h-[95vh]">
+    <section className="max-w-2xl w-full mx-auto px-2 md:px-4 min-h-[95vh]">
       <div className="text-center bg-red-50 border border-red-200 rounded-lg p-6">
         <h2 className="text-xl font-semibold text-red-800 mb-2">
           Something went wrong
