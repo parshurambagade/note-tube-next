@@ -1,7 +1,6 @@
 import { GEMINI_API_KEY, PROMPT_FOR_NOTES_GENERATION } from "@/constants";
 import { TranscriptService } from "@/services/transcriptService";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
