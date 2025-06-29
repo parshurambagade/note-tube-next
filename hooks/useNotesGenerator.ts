@@ -6,26 +6,23 @@ import { useRouter } from "next/navigation";
 import useRecentlyGeneratedNotesStore from "@/stores/recently-generated-notes-store";
 import { useVideoData } from "./useVideoData";
 
-export const useNotesGenerator = (
-  videoId: string,
-): UseNotesGeneratorProps => {
-    
+export const useNotesGenerator = (videoId: string): UseNotesGeneratorProps => {
   const [notes, setNotes] = useState<NotesData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuth();
   const router = useRouter();
-  
+
   // Get video data for caching
   const { videoData } = useVideoData(videoId);
-  
+
   // Recently generated notes store
   const {
     getCachedNotes,
     addGeneratedNote,
     hasGeneratedNotes,
-    cleanupOldEntries
+    cleanupOldEntries,
   } = useRecentlyGeneratedNotesStore();
 
   const generateNotes = async (videoId: string) => {
@@ -48,7 +45,10 @@ export const useNotesGenerator = (
     try {
       // Check if notes already exist in saved notes for this videoId
       if (user) {
-        const existingNotes = await NotesService.getNotesByVideoId(videoId, user.id);
+        const existingNotes = await NotesService.getNotesByVideoId(
+          videoId,
+          user.id
+        );
 
         if (existingNotes) {
           setLoading(false);
@@ -56,17 +56,67 @@ export const useNotesGenerator = (
           return;
         }
       }
-      
+
       const notesData = await NotesService.generateNotes(videoId);
       setNotes(notesData);
-      
+
       // Cache the generated notes
       addGeneratedNote(videoId, notesData, videoData);
-      
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to generate notes";
+    } catch (err: any) {
+      let errorMessage = "Failed to generate notes. Please try again.";
+
+      // Parse and simplify common error messages
+      if (err?.message) {
+        const message = err.message.toLowerCase();
+
+        // Check for specific error patterns
+        if (
+          message.includes("transcript") ||
+          message.includes("could not fetch transcript")
+        ) {
+          errorMessage =
+            "Could not get video transcript. Please check if the video has captions enabled.";
+        } else if (
+          message.includes("video length") ||
+          message.includes("too long")
+        ) {
+          errorMessage =
+            "Video is too long to process. Please try with a shorter video.";
+        } else if (
+          message.includes("network") ||
+          message.includes("fetch failed")
+        ) {
+          errorMessage =
+            "Network error. Please check your internet connection and try again.";
+        } else if (
+          message.includes("api") ||
+          message.includes("quota") ||
+          message.includes("rate limit")
+        ) {
+          errorMessage =
+            "Service temporarily unavailable. Please try again in a few minutes.";
+        } else if (
+          message.includes("video not found") ||
+          message.includes("invalid video")
+        ) {
+          errorMessage =
+            "Video not found. Please check the YouTube URL and try again.";
+        } else if (message.includes("failed to generate notes")) {
+          errorMessage =
+            "Unable to generate notes for this video. The content might not be suitable for note generation.";
+        } else if (message.includes("json") || message.includes("parse")) {
+          errorMessage =
+            "There was an issue processing the video content. Please try again.";
+        } else if (message.includes("timeout")) {
+          errorMessage =
+            "Request timed out. Please try again with a shorter video.";
+        }
+      }
+
       setError(errorMessage);
       console.error("Error fetching notes:", err);
+      console.error("Error message:", err?.message);
+      console.error("Error type:", typeof err);
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import { GEMINI_API_KEY, PROMPT_FOR_NOTES_GENERATION } from "@/constants";
 import { TranscriptService } from "@/services/transcriptService";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const prompt = PROMPT_FOR_NOTES_GENERATION + transcript;
 
-    if (prompt.length > 30000) {
+    if (prompt.length > 100000) {
       return NextResponse.json(
         { error: "Video length is too long" },
         { status: 400 }

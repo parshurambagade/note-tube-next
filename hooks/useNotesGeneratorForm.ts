@@ -1,10 +1,13 @@
 import { useRouter } from "next/navigation";
 import { useYouTubeVideoId } from "./useYouTubeVideoId";
-import type { UseNotesGeneratorFormReturn, UseNotesGeneratorFormProps } from "@/types";
+import type {
+  UseNotesGeneratorFormReturn,
+  UseNotesGeneratorFormProps,
+} from "@/types";
 
-export const useNotesGeneratorForm = ({ 
-  url, 
-  onNavigate 
+export const useNotesGeneratorForm = ({
+  url,
+  onNavigate,
 }: UseNotesGeneratorFormProps): UseNotesGeneratorFormReturn => {
   const router = useRouter();
   const { videoId, error, isValidVideoId } = useYouTubeVideoId(url);
@@ -32,6 +35,6 @@ export const useNotesGeneratorForm = ({
     videoId,
     error,
     isValidVideoId,
-    handleSubmit
+    handleSubmit,
   };
 };
