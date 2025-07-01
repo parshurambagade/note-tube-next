@@ -37,11 +37,14 @@ const DeleteConfirmationDialog = ({ videoId }: { videoId: string }) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
+        aria-label="Delete Notes"
         disabled={isDeleted || isDeleting}
-        className="cursor-pointer px-2 py-1 md:px-3 md:py-2 text-sm rounded-md bg-red-600 hover:bg-red-700 text-white flex items-center gap-2"
+        className="cursor-pointer px-3 py-2 text-sm rounded-md bg-red-600 hover:bg-red-700 text-white flex items-center gap-2"
       >
         <Trash2 className="h-4 w-4" />
-        {isDeleting ? "Deleting Notes" : "Delete Notes"}
+        <span className="hidden md:inline">
+          {isDeleting ? "Deleting Notes" : "Delete Notes"}
+        </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

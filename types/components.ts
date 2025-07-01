@@ -1,6 +1,6 @@
 // Component-related type definitions
 
-import type { VideoData } from './video';
+import type { VideoData } from "./video";
 
 export interface NotesGeneratorProps {
   onNavigate?: (videoId: string) => void;
@@ -14,12 +14,15 @@ export interface NotesVideoHeadProps {
   videoData: VideoData;
   notes: NotesData;
 }
-
+export interface NotesHeadButtonsProps {
+  videoData: VideoData | null;
+  notes: NotesData | null;
+}
 // Notes content types
 export interface NoteSection {
   title: string;
   content: string;
-  subsections?: { subTopicTitle: string; content: string }[]
+  subsections?: { subTopicTitle: string; content: string }[];
   timestamp: string;
 }
 
