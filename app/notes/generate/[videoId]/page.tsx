@@ -25,7 +25,7 @@ const Generate = () => {
     loading: notesLoading,
     error: notesError,
     refetch: refetchNotes,
-  } = useNotesGenerator(videoId as string);
+  } = useNotesGenerator(videoId as string, videoData);
 
   return (
     <main className="min-h-[95vh] py-20 px-2 md:px-4 container mx-auto">

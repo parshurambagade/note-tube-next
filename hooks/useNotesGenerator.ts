@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NotesService } from "@/services/notesService";
-import { NotesData, UseNotesGeneratorProps } from "@/types";
+import { NotesData, UseNotesGeneratorProps, VideoData } from "@/types";
 import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
 import useRecentlyGeneratedNotesStore from "@/stores/recently-generated-notes-store";
-import { useVideoData } from "./useVideoData";
 
-export const useNotesGenerator = (videoId: string): UseNotesGeneratorProps => {
+export const useNotesGenerator = (
+  videoId: string,
+  videoData: VideoData | null
+): UseNotesGeneratorProps => {
   const [notes, setNotes] = useState<NotesData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isGeneratingRef = useRef(false);
 
   const { user } = useAuth();
   const router = useRouter();
-
-  // Get video data for caching
-  const { videoData } = useVideoData(videoId);
 
   // Recently generated notes store
   const {
@@ -31,6 +31,11 @@ export const useNotesGenerator = (videoId: string): UseNotesGeneratorProps => {
       return;
     }
 
+    // Prevent multiple simultaneous calls
+    if (isGeneratingRef.current) {
+      return;
+    }
+
     // Check if we have cached notes first
     const cachedNotes = getCachedNotes(videoId);
     if (cachedNotes) {
@@ -39,6 +44,7 @@ export const useNotesGenerator = (videoId: string): UseNotesGeneratorProps => {
       return;
     }
 
+    isGeneratingRef.current = true;
     setLoading(true);
     setError(null);
 
